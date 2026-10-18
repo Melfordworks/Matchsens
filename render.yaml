@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: matchsense
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: API_FOOTBALL_KEY
+        sync: false
+      - key: TIMEZONE
+        value: Africa/Lagos

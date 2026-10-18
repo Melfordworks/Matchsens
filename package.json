@@ -1,0 +1,16 @@
+{
+  "name": "matchsense",
+  "version": "0.1.0",
+  "description": "Live football scores and pre-match betting briefings for 10 top leagues plus the Champions League and Europa League.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.17"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

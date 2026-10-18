@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Matchsense: live scores and pre-match briefings</title>
+  <meta name="description" content="Live scores, form, team news and odds compared for 10 top football leagues plus the Champions League and Europa League.">
+  <meta name="theme-color" content="#17633f">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <a class="skip" href="#app">Skip to content</a>
+  <header class="top">
+    <div class="top-inner">
+      <a class="brand" href="#/">Matchsense</a>
+      <nav aria-label="Main">
+        <a href="#/" data-nav="matches">Matches</a>
+        <a href="#/tables" data-nav="tables">Tables</a>
+        <a href="#/help" data-nav="help">Safer betting</a>
+      </nav>
+    </div>
+  </header>
+  <p id="banner" class="banner" hidden></p>
+  <main id="app" tabindex="-1"></main>
+  <footer class="foot">
+    <p>18+ only. Stats and odds inform decisions; they never guarantee a result. <a href="#/help">Bet safely</a>.</p>
+  </footer>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <div id="gate" class="gate" hidden>
+    <div class="gate-box" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+      <h2 id="gate-title">Are you 18 or over?</h2>
+      <p>Matchsense shows betting odds and is only for adults.</p>
+      <div class="gate-actions">
+        <button type="button" class="btn primary" data-gate="yes">Yes, I'm 18 or over</button>
+        <a class="btn" href="https://www.google.com">No, leave</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
