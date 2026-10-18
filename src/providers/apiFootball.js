@@ -4,6 +4,7 @@ import { LEAGUES, LEAGUE_IDS, todayIn } from '../leagues.js';
 
 const BASE = 'https://v3.football.api-sports.io';
 const HOUR = 3600;
+const FINISHED = new Set(['FT', 'AET', 'PEN']);
 
 export function normFixture(f) {
   return {
@@ -151,12 +152,24 @@ export function createApiFootballProvider({ key, season, timezone }) {
       return r[0] ? normFixture(r[0]) : null;
     },
 
+    // Free API-Football plans block the "last" parameter, so we fetch the team's
+    // season and pick the most recent finished games ourselves.
     async teamLast(teamId) {
-      return (await call('/fixtures', { team: teamId, last: 12, timezone }, 3 * HOUR)).map(normFixture);
+      const finished = (list) => list.filter((f) => FINISHED.has(f.fixture.status.short));
+      let games = finished(await call('/fixtures', { team: teamId, season, timezone }, 3 * HOUR));
+      if (games.length < 10) {
+        // Early in the season: top up with last season's games.
+        try {
+          games = games.concat(finished(await call('/fixtures', { team: teamId, season: season - 1, timezone }, 24 * HOUR)));
+        } catch (err) {
+          console.warn(`Previous season unavailable for team ${teamId}: ${err.message}`);
+        }
+      }
+      return games.map(normFixture);
     },
 
     async h2h(a, b) {
-      return (await call('/fixtures/headtohead', { h2h: `${a}-${b}`, last: 10, timezone }, 12 * HOUR)).map(normFixture);
+      return (await call('/fixtures/headtohead', { h2h: `${a}-${b}`, timezone }, 12 * HOUR)).map(normFixture);
     },
 
     async injuries(fixtureId) {
